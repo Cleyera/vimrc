@@ -1,124 +1,93 @@
 scriptencoding utf-8
-
-"色はデフォルトに設定しておく
 colorscheme default
+syntax on
 
-"set compatible     "viとの互換性を保つ
 set nocompatible
 
+set number
+set title
+set showmatch
+set matchtime=3
+set wrap
+set showcmd
+set timeout
+set timeoutlen=1000
+set scrolloff=8
+set sidescrolloff=16
+"set cursorcolumn
+"set cursorline
 
-"画面表示の設定
-set number              "行番号を表示
-set title               "ターミナルのタイトルを変更
-set showmatch           "対応カッコをハイライト表示
-set matchtime=3         "ハイライト表示の秒数
-set wrap                "ウインドウ端に達した時に折り返し
-"set nowrap
-"set cursorcolumn       "カーソル位置のカラムの背景色を変える
-"set cursorline          "カーソルラインを表示
-set showcmd             "コマンドを画面下に表示
-set scrolloff=8         "上下の確保する視界の幅を設定
-set sidescrolloff=16    "左右の確保する視界は16文字
-syntax on               "構文ごとの色分け
+set ambiwidth=double
+set backspace=indent,eol,start
+set scroll=1
+set sidescroll=1
+"set whichwrap=b,s,h,l,<,>,[,]
+"set nrformats-=octal
 
-
-"カーソルや文字入力関係
-set ambiwidth=double           "文脈により解釈が異る全角文字の幅を2に固定
-set backspace=indent,eol,start "Backspaceキーノ影響範囲に制限をもうけない
-set whichwrap=b,s,h,l,<,>,[,]  "行頭行末を左右移動でまたぐ
-set scroll=1                   "上下スクロールは1行づつ
-set sidescroll=1               "左右スクロールは1文字づつ
-"set nrformats-=octal          "0がつく数字を8進にしない
-
-"不可視文字の表示記号設定
 "set list
 "set listchars=tab:»,trail:-,eol:↲,extends:»-,precedes:«,nbsp:%
 
-
-
-"タブ関係
+"tab settings
 set smarttab
-set expandtab       "タブを半角スペースで挿入
-set tabstop=4       "タブをスペース4つに
-set autoindent      "改行時に前の行のインデントを継続すす
-set smartindent     "自動でインデントする
-set shiftwidth=4    "vimが自動生成するタブの幅を4に設定
-set softtabstop=4   "連続したスペースに対してタブやバックスペースでカーソルが動く距離
+set expandtab
+set tabstop=4
+set autoindent
+set smartindent
+set shiftwidth=4
+set softtabstop=4
 
-
-
-"ファイル処理関連
-set hidden      "保存されていないファイルがあるときにでも別のファイルをひらける
-set confirm     "み保存データがある時は修了前に確認する
-"set autoread   "外部でファイルが変更された場合自動でよみなおす
-set nobackup    "ファイル保存時バックアップファイルを作らない
+set hidden
+set confirm
+set nobackup
+set noswapfile
+"set autoread
 "set backup
 "set backupdir=~/backup
-set noswapfile  "ファイル編集中にスワップファイルを作らない
 
-
-"ステータスラインの設定
+"status line settings
 set laststatus=2
 set statusline=%{expand('%:p:t')}\ %<[%{expand('%:p:h')}]%=\ %m%r%y%w[%{&fenc!=''?&fenc:&enc}][%{&ff}][%3l,%3c,%3p]
 
+set hlsearch
+set incsearch
+set smartcase
+set wrapscan
+set gdefault
+"set ignorecase
 
-
-"検索/置換の設定
-set hlsearch    "検索文字列をハイライトする
-set incsearch   "インクりメンタルサーチを行う
-"set ignorecase "大文字小文字を区別しない
-set smartcase   "大文字と小文字の混在した文字列に限り、区別する
-set wrapscan    "最後尾まで検索を終えたら次の検索で先頭にもどる
-set gdefault    "検索のときにgオプションをデフォルトで有効にする
-
-
-"ビープ音の設定
+"bell style settings
 set visualbell t_vb=
-set noerrorbells    "エラーメッセージの表示時にビープ音を鳴らさない
+set noerrorbells
 
+set history=50
+set virtualedit=block
+set wildmenu
+set wildmode=list:longest,full
+set matchpairs+=<:>
+"set iminsert=2
+"set paste
 
-
-"その他
-set history=50                          "コマンドラインの履歴の数の設定
-set virtualedit=block                   "文字の無いところもカーソル移動できるようにする
-set wildmenu wildmode=list:longest,full "コマンドモードでTABキーによるファイル名補完を有効にする
-set matchpairs& matchpairs+=<:>         "対応カッコに<>を追加
-"set iminsert=2                         "インサートモードから抜けるを自動的にIMEをオフに
-"set paste                              "コピペの時に体裁を保つ
-"set wildmenu=fst:ull
-
-
-
-"w!!でスーパーユーザーとして保存
+"save as super user
 cnoremap w!! w!sudo tee > /dev/null %
 
-"入力モード中に素早くjjとおすとESCとみなす
 inoremap jj <Esc>
 
-
-"ESCを2回押すとハイライトを消す
 nnoremap <silent><Esc><Esc> :nohlsearch<CR>
 
-
-
-"検索後にジャンプしたときに検索単語を画面中央に持って来る
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-"j,kによる移動を折り返されたテキストでも自然に振る舞うようにする
 nnoremap j gj
 nnoremap k gk
 
-"Shift + 矢印でウインドウサイズを変更
 nnoremap <silent><S-Left>   <C-w><
 nnoremap <silent><S-Right>  <C-w>>
 nnoremap <silent><S-Up>     <C-w>-
 nnoremap <silent><S-Down>   <C-w>+
 
-"矢印キーを無効化
 nnoremap <Up>       <Nop>
 nnoremap <Down>     <Nop>
 nnoremap <Left>     <Nop>
@@ -128,53 +97,76 @@ vnoremap <Down>     <Nop>
 vnoremap <Left>     <Nop>
 vnoremap <Right>    <Nop>
 
-"Ctrl + hjkl でウインドウ間を移動
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-"入力モードでのカーソル移動
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 
-
-"コマンドモードでのカーソル移動
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
 cnoremap <C-h> <Left>
 cnoremap <C-l> <Right>
 
-
-"vvで行末まで選択
 vnoremap v $h
-
-"Yで行末までヤンク
 nnoremap Y y$
 
-
-"TABで対応ペアに飛ぶ
 nnoremap <Tab> %
 vnoremap <Tab> %
 
-"/{pattern}入力中は[/]をタイプすると[\/]に置き換え
-"?{pattern}入力中は[?]をタイプすると[\?]に置き換え
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
-"x削除でヤンクしない
 nnoremap x "_x
+nnoremap X "_X
+vnoremap x "_x
+vnoremap X "_X
 
-"Cインサートでヤンクしない
+nnoremap c "_c
 nnoremap C "_C
+vnoremap c "_c
+vnoremap C "_C
 
+nnoremap s "_s
+nnoremap S "_S
+vnoremap s "_s
+vnoremap S "_S
 
-"makefileを編集するときには不可視文字を可視化してタブは空白に置き換えない
 augroup TabGroup
     autocmd!
     autocmd FileType make setlocal list listchars=tab:»-,trail:- noexpandtab
     autocmd BufNewFile,BufRead *.py setlocal list listchars=tab:»-,trail:- noexpandtab
 augroup END
 
+augroup Brackets
+    autocmd!
+    autocmd FileType c,cpp inoremap <buffer> {<Enter> {<CR>}<Left><Esc><S-o>
+augroup END
+
+let mapleader = "\<Space>"
+
+nnoremap <Leader>h ^
+nnoremap <Leader>l $
+nnoremap <Leader>a 0
+vnoremap <Leader>h ^
+vnoremap <Leader>l $
+vnoremap <Leader>a 0
+
+nnoremap <Leader>dd "_dd
+nnoremap <Leader>d  "_d
+vnoremap <Leader>d  "_d
+nnoremap <Leader>diw "_diw
+nnoremap <Leader>dw "_dw
+nnoremap <Leader>ciw "_ciw
+nnoremap <Leader>cw "_cw
+
+nnoremap <Leader><Leader>yy "+yy
+nnoremap <Leader><Leader>y  "+y
+nnoremap <Leader><Leader>dd "+dd
+nnoremap <Leader><Leader>d  "+d
+nnoremap <Leader><Leader>p  "+p
+nnoremap <Leader><Leader>P  "+P
+vnoremap <Leader><Leader>p  "+p
+vnoremap <Leader><Leader>P  "+P
